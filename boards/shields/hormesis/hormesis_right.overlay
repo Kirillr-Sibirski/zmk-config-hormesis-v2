@@ -1,0 +1,5 @@
+/ {
+    chosen {
+        zmk,split-role = <ZMK_SPLIT_ROLE_RIGHT>;
+    };
+};

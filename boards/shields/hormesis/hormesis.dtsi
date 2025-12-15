@@ -1,0 +1,47 @@
+/dts-v1/;
+
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,physical-layout = &layout0;
+        zmk,led-strip = &led_strip0;
+    };
+
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        diode-direction = "col2row";
+        wakeup-source;
+
+        /* Rows: bottom → num → thumb */
+        row-gpios =
+            <&gpio0 9  GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN>,  /* P9  bottom */
+            <&gpio0 8  GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN>,  /* P8  home */
+            <&gpio0 7  GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN>,  /* P7  top */
+            <&gpio0 6  GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN>,  /* P6  num */
+            <&gpio0 10 GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN>;  /* P10 thumb */
+
+        /* Columns: outer → inner */
+        col-gpios =
+            <&gpio0 0 GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN>,  /* P0 outer */
+            <&gpio0 1 GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN>,  /* P1 pinky */
+            <&gpio0 2 GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN>,  /* P2 ring */
+            <&gpio0 3 GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN>,  /* P3 middle */
+            <&gpio0 4 GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN>,  /* P4 index */
+            <&gpio0 5 GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN>;  /* P5 inner */
+    };
+
+    led_strip0: led_strip {
+        compatible = "worldsemi,ws2812-spi";   /* WS2812 / SK6812 */
+        chain-length = <25>;                    /* total number of LEDs */
+        spi-max-frequency = <4000000>;
+        status = "okay";
+
+        data-gpios = <&gpio0 21 GPIO_ACTIVE_HIGH>; /* your P21 pin */
+    };
+
+    layout0: physical_layout {
+        compatible = "zmk,physical-layout";
+        rows = <5>;
+        columns = <6>;
+    };
+};

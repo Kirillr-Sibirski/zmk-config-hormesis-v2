@@ -4,4 +4,4 @@ config SHIELD_HORMESIS_LEFT
 
 # No whitespace after the comma or in your part name!
 config SHIELD_HORMESIS_RIGHT
-    def_bool $(shields_list_contains,homresis_right)
+    def_bool $(shields_list_contains,hormesis_right)
